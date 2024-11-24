@@ -1,0 +1,67 @@
+.header {
+    height: 34vw; /* Bisa disesuaikan untuk tetap responsif */
+    margin: 30px auto;
+    background: url('https://t4.ftcdn.net/jpg/07/56/02/61/360_F_756026113_nVZiBFxhGCcpW2RYK5bFjfvjonY7Fg0P.jpg') no-repeat;
+    background-size: 1534px 650px; /* Menyesuaikan ukuran gambar */
+    position: relative;
+    background-position: center; /* Menjaga posisi gambar */
+    border-radius: 20px; /* Menambahkan border-radius */
+    overflow: hidden; /* Agar isi tidak keluar dari border */
+}
+.header-contents{
+    position: absolute;
+    
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap:1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left:6vw;
+    animation: fadeIn 3s;
+}
+.header-contents h2{
+    font-weight: 500;
+    color:white;
+    font-size:max(4.5vw,22px)
+}
+.header-contents p{
+    color:white;
+    font-size: 1 vw;
+}
+.header-contents button{
+    border: none;
+    color:#747474;
+    font-weight: 500;
+    padding:1vw 2.3vw;
+    background-color: white;
+    font-size:max(1.5vw,13px);
+    border-radius: 50px;
+}
+@media (max-width:1050px){
+    .header{
+        height: 38vw; /* Tinggi tetap responsif */
+        background-size: auto 650px;
+    }
+    .header-contents{
+        max-width:45%    };
+}
+@media (max-width:750px){
+    .header {
+        height: auto; /* Mengizinkan tinggi fleksibel */
+        background-size: cover; /* Menutupi area dengan responsif */
+    }
+
+    .header-contents{
+        max-width:65%   
+     }
+     .header-contents p{
+  display: none;
+     }
+     .header-contents button{
+        padding:2vw 4vw;
+     }
+}
+
+
