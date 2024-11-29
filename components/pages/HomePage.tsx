@@ -16,6 +16,14 @@ import Category4 from '@/images/food images/cat4.jpeg';
 import Category5 from '@/images/food images/cat5.jpeg';
 import Category6 from '@/images/food images/cat6.jpeg';
 
+// import Category1 from '@/images/Americano/menu.jpg';
+// import Category2 from '@/images/Cappuccino/menu.jpg';
+// import Category3 from '@/images/ColdBrew/menu.jpeg';
+// import Category4 from '@/images/Espresso/menu.jpeg';
+// import Category5 from '@/images/MilkCoffee/menu.jpg';
+// import Category6 from '@/images/Mocha/menu.jpg';
+
+
 import Image from 'next/image';
 
 import {RestarentList } from "@/components/container/RestarentList";

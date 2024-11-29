@@ -2,7 +2,7 @@ import Image from 'next/image';
 import './globals.css';
 
 import { User } from './user';
-import Logo from '@/images/logo.svg';
+import Logo from '@/images/logo.png';
 import {
   RocketIcon,
   CrumpledPaperIcon,
@@ -53,23 +53,9 @@ export default function RootLayout({
         <main className="container">{children}</main>
         <footer className="mt-10 bg-gray-900 py-12">
           <div className="container flex justify-between">
-            <Image src={Logo} width={200} height={200} alt="Fooedie eats"/>
+            <Image src={Logo} width={400} height={450} alt="Fooedie eats"/>
             <div className='flex gap-14'>
               <div>
-                <ul>
-                  <li>
-                    <a className="text-gray-400 text-md">FAQ</a>
-                  </li>
-                  <li className="mt-4">
-                    <a className="text-gray-400 text-md">Privacy policy</a>
-                  </li>
-                  <li className="mt-4">
-                    <a className="text-gray-400 text-md">Help & Support</a>
-                  </li>
-                  <li className="mt-4">
-                    <a className="text-gray-400 text-md">Term & Conditions</a>
-                  </li>
-                </ul>
               </div>
               <div>
                 <ul>
