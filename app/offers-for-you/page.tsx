@@ -1,8 +1,8 @@
-import { RestarentList} from '@/components/container/RestarentList';
+import { MenuList} from '@/components/container/MenuList';
 
 function OffersForYou() {
     return (
-        <RestarentList />
+        <MenuList />
     )
 }
 

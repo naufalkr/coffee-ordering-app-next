@@ -40,21 +40,23 @@ export default function RootLayout({
                 </Link>
               </nav>
               <User />
-              <Button
-                variant={'ghost'}
-                className="text-gray-600 hover:text-black cursor-pointer flex gap-1 items-center"
-              >
-                <CardStackIcon />
-                Cart (0)
-              </Button>
+              <Link href="/cart" passHref>
+                <Button
+                  variant={'ghost'}
+                  className="text-gray-600 hover:text-black cursor-pointer flex gap-1 items-center"
+                >
+                  <CardStackIcon />
+                  Cart (0)
+                </Button>
+              </Link>
             </div>
           </div>
         </header>
         <main className="container">{children}</main>
         <footer className="mt-10 bg-gray-900 py-12">
           <div className="container flex justify-between">
-            <Image src={Logo} width={400} height={450} alt="Fooedie eats"/>
-            <div className='flex gap-14'>
+            {/* <Image src={Logo} width={400} height={450} alt="Fooedie eats"/> */}
+            <div className='flex gap-5 mr-4'>
               <div>
               </div>
               <div>
