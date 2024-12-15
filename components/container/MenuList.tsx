@@ -3,28 +3,28 @@
 import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons';
 
 
-import Americano1 from '@/images/Americano/1.jpeg';
-import Americano2 from '@/images/Americano/2.jpg';
-import Americano3 from '@/images/Americano/3.jpg';
-import Americano4 from '@/images/Americano/4.jpg';
-import Americano5 from '@/images/Americano/5.jpg';
+import Americano1 from '../../images/Americano/1.jpeg';
+import Americano2 from '../../images/Americano/2.jpg';
+import Americano3 from '../../images/Americano/3.jpg';
+import Americano4 from '../../images/Americano/4.jpg';
+import Americano5 from '../../images/Americano/5.jpg';
 
-import ColdBrew1 from '@/images/ColdBrew/1.jpeg';
-import ColdBrew2 from '@/images/ColdBrew/2.jpeg';
-import ColdBrew3 from '@/images/ColdBrew/3.jpg';
-import ColdBrew4 from '@/images/ColdBrew/4.png';
-import ColdBrew5 from '@/images/ColdBrew/5.jpg';
+import ColdBrew1 from '../../images/ColdBrew/1.jpeg';
+import ColdBrew2 from '../../images/ColdBrew/2.jpeg';
+import ColdBrew3 from '../../images/ColdBrew/3.jpg';
+import ColdBrew4 from '../../images/ColdBrew/4.png';
+import ColdBrew5 from '../../images/ColdBrew/5.jpg';
 
 import { assets } from '../../assets/assets';
 
 
 import Image from 'next/image';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '../../components/ui/card';
 
 import * as React from 'react';
 import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -32,7 +32,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+} from '../../components/ui/dropdown-menu';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 

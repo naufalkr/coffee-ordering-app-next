@@ -2,14 +2,14 @@ import Image from 'next/image';
 import './globals.css';
 
 import { User } from './user';
-import Logo from '@/images/logo.png';
+import Logo from '../../images/logo.png';
 import {
   RocketIcon,
   CrumpledPaperIcon,
   CardStackIcon
 } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
-import { GlobalSearch } from '@/components/container/GlobalSearch';
+import { Button } from '../../components/ui/button';
+import { GlobalSearch } from '../../components/container/GlobalSearch';
 import Link from "next/link"
 
 export const metadata = {

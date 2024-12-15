@@ -4,37 +4,37 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious
-} from '@/components/ui/carousel';
-import Banner from '@/images/banner.png';
-import Banner1 from '@/images/banner1.png';
-import Banner2 from '@/images/banner2.png';
+} from '../ui/carousel';
+import Banner from '../../images/banner.png';
+import Banner1 from '../../images/banner1.png';
+import Banner2 from '../../images/banner2.png';
 
-import Category1 from '@/images/Americano/americano.png';
-import Category2 from '@/images/Cappuccino/cappuccino.png';
-import Category3 from '@/images/ColdBrew/coldbrew.png';
-import Category4 from '@/images/Espresso/espresso.png';
-import Category5 from '@/images/MilkCoffee/milkcoffee.png';
-import Category6 from '@/images/Mocha/mocha.png';
-import Category7 from '@/images/NonCoffee/noncoffee.png';
-import Category8 from '@/images/TraditionalCoffee/traditionalcoffee.png';
+import Category1 from '../../images/Americano/americano.png';
+import Category2 from '../../images/Cappuccino/cappuccino.png';
+import Category3 from '../../images/ColdBrew/coldbrew.png';
+import Category4 from '../../images/Espresso/espresso.png';
+import Category5 from '../../images/MilkCoffee/milkcoffee.png';
+import Category6 from '../../images/Mocha/mocha.png';
+import Category7 from '../../images/NonCoffee/noncoffee.png';
+import Category8 from '../../images/TraditionalCoffee/traditionalcoffee.png';
 
-// import Category2 from '@/images/food images/cat2.jpeg';
-// import Category3 from '@/images/food images/cat3.jpeg';
-// import Category4 from '@/images/food images/cat4.jpeg';
-// import Category5 from '@/images/food images/cat5.jpeg';
-// import Category6 from '@/images/food images/cat6.jpeg';
+// import Category2 from '../../images/food images/cat2.jpeg';
+// import Category3 from '../../images/food images/cat3.jpeg';
+// import Category4 from '../../images/food images/cat4.jpeg';
+// import Category5 from '../../images/food images/cat5.jpeg';
+// import Category6 from '../../images/food images/cat6.jpeg';
 
-// import Category1 from '@/images/Americano/menu.jpg';
-// import Category2 from '@/images/Cappuccino/menu.jpg';
-// import Category3 from '@/images/ColdBrew/menu.jpeg';
-// import Category4 from '@/images/Espresso/menu.jpeg';
-// import Category5 from '@/images/MilkCoffee/menu.jpg';
-// import Category6 from '@/images/Mocha/menu.jpg';
+// import Category1 from '../../images/Americano/menu.jpg';
+// import Category2 from '../../images/Cappuccino/menu.jpg';
+// import Category3 from '../../images/ColdBrew/menu.jpeg';
+// import Category4 from '../../images/Espresso/menu.jpeg';
+// import Category5 from '../../images/MilkCoffee/menu.jpg';
+// import Category6 from '../../images/Mocha/menu.jpg';
 
 
 import Image from 'next/image';
 
-import {MenuList } from "@/components/container/MenuList";
+import {MenuList } from "../container/MenuList";
 
 export function HomePage() {
   return (

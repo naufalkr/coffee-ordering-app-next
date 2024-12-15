@@ -19,7 +19,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 
-} from '@/components/ui/command';
+} from '../../components/ui/command';
 import { useCallback, useState } from 'react';
 
 export function GlobalSearch() {

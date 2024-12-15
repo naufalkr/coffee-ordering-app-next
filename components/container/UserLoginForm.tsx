@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Label } from '../../components/ui/label';
 import {
   Sheet,
   SheetClose,
@@ -11,39 +11,23 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger
-} from '@/components/ui/sheet';
+} from '../../components/ui/sheet';
 import { PersonIcon } from '@radix-ui/react-icons';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import fetchHook from '@/lib/fetchHook';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 
-export function UserLoginForm({ onSubmit }: { onSubmit: Function }) {
+export function UserLoginForm() {
   const [data, setData] = useState({
-    email: null,
-    passwordHash: null
+    email: '',
+    password: ''
   });
 
   const [registerForm, setRegisterForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    passwordHash: ''
+    password: ''
   });
-
-  const { makeRequest, data: userData } = fetchHook('/api/auth/user', {
-    method: 'POST',
-    body: JSON.stringify(registerForm)
-  });
-
-  useEffect(() => {
-    if(userData && userData.length > 0 && userData[0]?.email) {
-      onSubmit(userData[0])
-    }
-  }, [userData])
-
-  const signup = async () => {
-    await makeRequest();;    
-  };
 
   const onRegisterFormChange = useCallback(
     (key: string, value: string) => {
@@ -87,31 +71,29 @@ export function UserLoginForm({ onSubmit }: { onSubmit: Function }) {
             </SheetHeader>
             <div className="grid gap-4 py-4">
               <div>
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="email" className="text-right">
                   Email
                 </Label>
                 <Input
-                  id="name"
-                  value={data.email || ''}
+                  id="email"
+                  value={data.email}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onChange('email', e?.target?.value);
+                    onChange('email', e.target.value);
                   }}
                 />
               </div>
               <div>
-                <Label htmlFor="username" className="text-right">
+                <Label htmlFor="password" className="text-right">
                   Password
                 </Label>
                 <Input
-                  id="username"
+                  id="password"
                   type="password"
-                  value={data?.passwordHash || ''}
+                  value={data.password}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onChange('passwordHash', e?.target?.value);
+                    onChange('password', e.target.value);
                   }}
                 />
               </div>
@@ -121,10 +103,10 @@ export function UserLoginForm({ onSubmit }: { onSubmit: Function }) {
                 <Button
                   type="submit"
                   onClick={() => {
-                    onSubmit(data);
+                    console.log('Login data:', data);
                   }}
                 >
-                  Signin
+                  Sign In
                 </Button>
               </SheetClose>
             </SheetFooter>
@@ -135,61 +117,55 @@ export function UserLoginForm({ onSubmit }: { onSubmit: Function }) {
             </SheetHeader>
             <div className="grid gap-4 py-4">
               <div>
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="firstName" className="text-right">
                   First Name
                 </Label>
                 <Input
-                  id="name"
-                  value={registerForm.firstName || ''}
+                  id="firstName"
+                  value={registerForm.firstName}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onRegisterFormChange('firstName', e?.target?.value);
+                    onRegisterFormChange('firstName', e.target.value);
                   }}
                 />
               </div>
-
               <div>
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="lastName" className="text-right">
                   Last Name
                 </Label>
                 <Input
-                  id="name"
-                  value={registerForm.lastName || ''}
+                  id="lastName"
+                  value={registerForm.lastName}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onRegisterFormChange('lastName', e?.target?.value);
+                    onRegisterFormChange('lastName', e.target.value);
                   }}
                 />
               </div>
-
               <div>
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="registerEmail" className="text-right">
                   Email
                 </Label>
                 <Input
-                  id="name"
-                  value={registerForm.email || ''}
+                  id="registerEmail"
+                  value={registerForm.email}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onRegisterFormChange('email', e?.target?.value);
+                    onRegisterFormChange('email', e.target.value);
                   }}
                 />
               </div>
               <div>
-                <Label htmlFor="username" className="text-right">
+                <Label htmlFor="registerPassword" className="text-right">
                   Password
                 </Label>
                 <Input
-                  id="username"
+                  id="registerPassword"
                   type="password"
-                  value={registerForm?.passwordHash || ''}
+                  value={registerForm.password}
                   className="col-span-3"
-                  // @ts-ignore
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onRegisterFormChange('passwordHash', e?.target?.value);
+                    onRegisterFormChange('password', e.target.value);
                   }}
                 />
               </div>
@@ -199,7 +175,7 @@ export function UserLoginForm({ onSubmit }: { onSubmit: Function }) {
                 <Button
                   type="submit"
                   onClick={() => {
-                    signup();
+                    console.log('Register data:', registerForm);
                   }}
                 >
                   Register

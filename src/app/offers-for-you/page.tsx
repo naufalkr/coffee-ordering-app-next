@@ -1,4 +1,4 @@
-import { MenuList} from '@/components/container/MenuList';
+import { MenuList} from '../../../components/container/MenuList';
 
 function OffersForYou() {
     return (

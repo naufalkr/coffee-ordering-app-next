@@ -1,33 +1,20 @@
 'use client';
 
 import * as React from 'react';
-import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+} from '../../components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 
-import { User } from 'next-auth';
+type Checked = boolean;
 
-type Checked = DropdownMenuCheckboxItemProps['checked'];
-
-export function UserAuth({
-  user,
-  signOut
-}: {
-  user: User;
-  signOut: Function;
-}) {
-  const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true);
-  const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false);
+export function UserAuth() {
   const [showPanel, setShowPanel] = React.useState<Checked>(false);
 
   return (
@@ -35,18 +22,19 @@ export function UserAuth({
       <DropdownMenuTrigger asChild>
         <Button variant={'link'}>
           <Avatar>
-            <AvatarImage src={user?.name || ''} />
-            <AvatarFallback className='bg-slate-800 text-white'>L</AvatarFallback>
+            <AvatarImage src="" alt="User Avatar" />
+            <AvatarFallback className='bg-slate-800 text-white'>U</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" side='bottom' align='end'>
-        <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+        <DropdownMenuLabel>User Email Placeholder</DropdownMenuLabel>
         <DropdownMenuCheckboxItem
           checked={showPanel}
           onCheckedChange={(value: boolean) => {
             setShowPanel(value);
-            signOut();
+            // Add any custom frontend logic here if needed
+            console.log("Logout clicked");
           }}
         >
           Logout
