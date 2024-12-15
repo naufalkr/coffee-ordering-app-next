@@ -1,102 +1,224 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { FaTrashAlt, FaEdit, FaPlus } from 'react-icons/fa';
 
-export default function OrdersPage() {
-  const [orders, setOrders] = useState([]); // State untuk menyimpan semua order
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+const OrderStatus = {
+  CART: 'CART',
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  PREPARING: 'PREPARING',
+  READY: 'READY',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+};
 
+interface Order {
+  order_id: number;
+  user_id: number;
+  order_status: string;
+  total_price: number | string; // Menangani kasus tipe string
+}
+
+export default function OrderManagementPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    user_id: '',
+    order_status: OrderStatus.CART,
+    total_price: 0,
+  });
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+
+  // Fetch orders
   const fetchOrders = async () => {
+    setLoading(true);
     try {
-      setError("");
-      const response = await fetch("/api/orders", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setOrders(data); // Simpan semua order ke state
-      } else {
-        setError(data.message || "Failed to fetch orders");
-      }
-    } catch (err) {
-      console.error("Error:", err);
-      setError("An unexpected error occurred while fetching orders");
+      const response = await axios.get<Order[]>('/api/order'); // Define the response type
+      setOrders(response.data); // TypeScript now knows `response.data` is of type `Order[]`
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const createOrder = async () => {
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  // Create or update an order
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      setMessage("");
-      setError("");
-
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(data.message);
-        fetchOrders(); // Refresh daftar order setelah membuat order baru
+      if (editingOrder) {
+        // Update order
+        await axios.patch('/api/order', {
+          order_id: editingOrder.order_id,
+          new_status: form.order_status,
+          new_total_price: parseFloat(form.total_price.toString()),
+        });
+        alert('Order updated successfully!');
       } else {
-        setError(data.message || "Failed to create order");
+        // Create new order
+        await axios.post('/api/order', {
+          user_id: parseInt(form.user_id),
+          order_status: form.order_status,
+          total_price: parseFloat(form.total_price.toString()),
+        });
+        alert('Order created successfully!');
       }
-    } catch (err) {
-      console.error("Error:", err);
-      setError("An unexpected error occurred while creating order");
+      resetForm();
+      fetchOrders();
+    } catch (error) {
+      console.error('Error saving order:', error);
+      alert('Failed to save order. Please try again.');
     }
+  };
+
+  // Delete an order
+  const deleteOrder = async (order_id: number) => {
+    const confirmDelete = confirm('Are you sure you want to delete this order?');
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`/api/order?order_id=${order_id}`);
+      alert('Order deleted successfully!');
+      fetchOrders();
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      alert('Failed to delete order. Please try again.');
+    }
+  };
+
+  // Set form data for editing
+  const editOrder = (order: Order) => {
+    setEditingOrder(order);
+    setForm({
+      user_id: order.user_id.toString(),
+      order_status: order.order_status,
+      total_price: Number(order.total_price),
+    });
+  };
+
+  // Reset form
+  const resetForm = () => {
+    setForm({ user_id: '', order_status: OrderStatus.CART, total_price: 0 });
+    setEditingOrder(null);
   };
 
   useEffect(() => {
-    fetchOrders(); // Ambil semua order saat halaman dimuat
+    fetchOrders();
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-6">Your Orders</h1>
-      <div className="w-96 p-4 bg-white rounded shadow">
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        {message && <p className="text-green-500 text-center mb-4">{message}</p>}
+    <div className="container mx-auto p-6">
+      <h1 className="text-2xl font-bold text-center mb-6">Order Management</h1>
 
-        <button
-          onClick={createOrder}
-          className="w-full py-2 px-4 mb-4 bg-blue-600 text-white font-bold rounded hover:bg-blue-700"
-        >
-          Create New Order
-        </button>
+      {/* Order Form */}
+      <div className="bg-white shadow rounded-lg p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-4">
+          {editingOrder ? 'Edit Order' : 'Create New Order'}
+        </h2>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">User ID</label>
+            <input
+              type="number"
+              name="user_id"
+              value={form.user_id}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Order Status</label>
+            <select
+              name="order_status"
+              value={form.order_status}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+              required
+            >
+              {Object.values(OrderStatus).map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Total Price</label>
+            <input
+              type="number"
+              name="total_price"
+              value={form.total_price}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+              required
+            />
+          </div>
+          <div className="col-span-2">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+            >
+              {editingOrder ? 'Update Order' : 'Create Order'}
+            </button>
+          </div>
+        </form>
+      </div>
 
-        <h2 className="text-xl font-semibold mb-4">Order List</h2>
-        <div className="space-y-2">
-          {orders.length > 0 ? (
-            orders.map((order) => (
-              <div key={order.order_id} className="p-4 bg-gray-200 rounded shadow">
-                <p>
-                  <strong>Order ID:</strong> {order.order_id}
-                </p>
-                <p>
-                  <strong>Status:</strong> {order.order_status}
-                </p>
-                <p>
-                  <strong>Total Price:</strong> ${order.total_price}
-                </p>
-                <p>
-                  <strong>Created At:</strong> {new Date(order.created_at).toLocaleString()}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-600">No orders found.</p>
-          )}
-        </div>
+      {/* Order List */}
+      <div className="bg-white shadow rounded-lg p-6">
+        <h2 className="text-xl font-semibold mb-4">Orders</h2>
+        {loading ? (
+          <p>Loading...</p>
+        ) : orders.length > 0 ? (
+          <ul className="space-y-4">
+            {orders.map((order) => (
+              <li
+                key={order.order_id}
+                className="border border-gray-300 rounded-lg p-4 flex justify-between items-center"
+              >
+                <div>
+                  <p>
+                    <strong>Order ID:</strong> {order.order_id}
+                  </p>
+                  <p>
+                    <strong>User ID:</strong> {order.user_id}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {order.order_status}
+                  </p>
+                  <p>
+                    <strong>Total Price:</strong> ${Number(order.total_price).toFixed(2)}
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => editOrder(order)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    <FaEdit /> Edit
+                  </button>
+                  <button
+                    onClick={() => deleteOrder(order.order_id)}
+                    className="text-red-600 hover:underline"
+                  >
+                    <FaTrashAlt /> Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No orders found.</p>
+        )}
       </div>
     </div>
   );

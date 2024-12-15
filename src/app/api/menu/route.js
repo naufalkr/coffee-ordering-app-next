@@ -1,22 +1,34 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
-const prisma = new PrismaClient();
-
-export async function GET(req) {
+export async function GET() {
+  // Get all menu items
   try {
-    const menus = await prisma.menuItem.findMany({
-      where: { is_available: true }, // Hanya menu yang tersedia
+    const menuItems = await prisma.menuItem.findMany();
+    return NextResponse.json(menuItems, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch menu items.' }, { status: 500 });
+  }
+}
+
+export async function POST(req) {
+  // Create a new menu item
+  try {
+    const body = await req.json();
+    const { name, description, price, image_url, is_available } = body;
+
+    const newItem = await prisma.menuItem.create({
+      data: {
+        name,
+        description,
+        price: parseFloat(price),
+        image_url,
+        is_available: is_available ?? true,
+      },
     });
 
-    return new Response(JSON.stringify({
-      success: true,
-      data: menus,
-    }), { status: 200 });
+    return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
-    console.error("Error fetching menu items:", error);
-    return new Response(JSON.stringify({
-      success: false,
-      message: "Failed to fetch menu items.",
-    }), { status: 500 });
+    return NextResponse.json({ error: 'Failed to create menu item.' }, { status: 500 });
   }
 }

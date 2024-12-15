@@ -34,7 +34,7 @@ import Category8 from '../../images/TraditionalCoffee/traditionalcoffee.png';
 
 import Image from 'next/image';
 
-import MenuList from "../container/MenuList";
+import {MenuList } from "../container/MenuList";
 
 export function HomePage() {
   return (
