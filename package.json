@@ -4,10 +4,12 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "npx prisma db seed"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.3",
+    "@prisma/client": "^6.0.1",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -17,16 +19,12 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
-    "@types/node": "20.12.11",
     "@types/react": "18.3.2",
     "@types/react-dom": "18.3.0",
-    "@vercel/analytics": "^1.2.2",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
-    "drizzle-kit": "^0.21.1",
-    "drizzle-orm": "^0.30.10",
     "embla-carousel-react": "^8.1.6",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
@@ -39,8 +37,7 @@
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.4.5"
+    "tailwindcss-animate": "^1.0.7"
   },
   "prettier": {
     "arrowParens": "always",
@@ -49,6 +46,12 @@
     "trailingComma": "none"
   },
   "devDependencies": {
-    "prisma": "^6.0.1"
+    "@types/node": "^22.10.2",
+    "prisma": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
