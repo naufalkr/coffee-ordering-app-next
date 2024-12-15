@@ -1,32 +1,22 @@
-import { NextResponse } from "next/server";
-import prisma from "../../../../prisma/client";
+import { PrismaClient } from '@prisma/client';
 
-export async function GET() {
+const prisma = new PrismaClient();
+
+export async function GET(req) {
   try {
-    const menus = await prisma.menuItem.findMany();
-    
-    if (!menus) {
-      return NextResponse.json({
-        success: false,
-        message: "No menus found",
-        data: []
-      }, { status: 404 });
-    }
+    const menus = await prisma.menuItem.findMany({
+      where: { is_available: true }, // Hanya menu yang tersedia
+    });
 
-    console.log("Fetched menus:", menus); // Debug log
-
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       success: true,
-      message: "List Data Menus",
-      data: menus
-    }, { status: 200 });
-
+      data: menus,
+    }), { status: 200 });
   } catch (error) {
-    console.error("Error fetching menus:", error);
-    return NextResponse.json({
+    console.error("Error fetching menu items:", error);
+    return new Response(JSON.stringify({
       success: false,
-      message: "Failed to fetch menus",
-      error: error.message
-    }, { status: 500 });
+      message: "Failed to fetch menu items.",
+    }), { status: 500 });
   }
 }
