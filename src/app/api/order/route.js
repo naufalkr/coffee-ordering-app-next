@@ -55,7 +55,11 @@ export async function GET(req) {
     // Fetch all orders
     const orders = await prisma.order.findMany({
       include: {
-        orderItems: true,
+        orderItems: {
+          include: {
+            menuItem: true,
+          },
+        },
       },
       orderBy: { created_at: "desc" },
     });

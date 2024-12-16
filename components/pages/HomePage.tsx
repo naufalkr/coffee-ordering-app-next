@@ -5,7 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '../ui/carousel';
-import Banner from '../../images/banner.png';
+import Banner from '../../images/banner4.png';
 import Banner1 from '../../images/banner1.png';
 import Banner2 from '../../images/banner2.png';
 

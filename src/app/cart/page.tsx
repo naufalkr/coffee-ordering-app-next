@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FaShoppingCart, FaTrashAlt, FaPlus, FaCheckCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion'; // For smooth animations
+import {MenuList } from "../../../components/container/MenuList";
 
 interface MenuItem {
   item_id: number;
@@ -198,6 +199,7 @@ export default function CartPage() {
   };
 
   return (
+    <>
     <motion.div
       className="container mx-auto p-6 bg-gradient-to-b from-yellow-50 to-amber-100"
       initial={{ opacity: 0 }}
@@ -235,10 +237,10 @@ export default function CartPage() {
                   </p>
                   <div className="mt-auto">
                     <p className="text-sm text-gray-600">
-                      Quantity: {item.quantity} x ${formatPrice(item.price_at_time)}
+                      Quantity: {item.quantity} x Rp {formatPrice(item.price_at_time)}
                     </p>
                     <p className="text-amber-800 font-bold mt-1">
-                      Subtotal: ${formatPrice(item.subtotal)}
+                      Subtotal: Rp {formatPrice(item.subtotal)}
                     </p>
                     <button
                       className="mt-4 bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded flex items-center gap-2"
@@ -252,7 +254,7 @@ export default function CartPage() {
             </div>
             <div className="mt-6 p-4 bg-amber-100 rounded-lg shadow-md">
               <p className="text-2xl font-bold text-right text-amber-800">
-                Total: ${formatPrice(cartData.total)}
+                Total: Rp {formatPrice(cartData.total)}
               </p>
             </div>
           </>
@@ -276,7 +278,7 @@ export default function CartPage() {
               <option value="">-- Select an Item --</option>
               {menuItems.map((menuItem) => (
                 <option key={menuItem.item_id} value={menuItem.item_id}>
-                  {menuItem.name} (${formatPrice(menuItem.price)})
+                  {menuItem.name} (Rp {formatPrice(menuItem.price)})
                 </option>
               ))}
             </select>
@@ -339,5 +341,7 @@ export default function CartPage() {
         </motion.div>
       )}
     </motion.div>
+    <MenuList />
+    </>
   );
 }

@@ -14,11 +14,28 @@ const OrderStatus = {
   CANCELLED: 'CANCELLED',
 };
 
+interface MenuItem {
+  item_id: number;
+  name: string;
+  price: number | string;
+  description?: string;
+}
+
+interface OrderItem {
+  order_item_id: number;
+  quantity: number;
+  price_at_time: number | string;
+  subtotal: number | string;
+  customizations?: string;
+  menuItem: MenuItem | null; // Allow null for safety
+}
+
 interface Order {
   order_id: number;
   user_id: number;
   order_status: string;
-  total_price: number | string; // Menangani kasus tipe string
+  total_price: number | string;
+  orderItems: OrderItem[];
 }
 
 export default function OrderManagementPage() {
@@ -196,8 +213,18 @@ export default function OrderManagementPage() {
                     <strong>Status:</strong> {order.order_status}
                   </p>
                   <p>
-                    <strong>Total Price:</strong> ${Number(order.total_price).toFixed(2)}
+                    <strong>Total Price:</strong> Rp {Number(order.total_price).toFixed(2)}
                   </p>
+                  <p>
+                    <strong>Order Items:</strong>
+                  </p>
+                  <ul className="ml-4 list-disc">
+                    {order.orderItems.map((item) => (
+                      <li key={item.order_item_id}>
+                        {item.menuItem?.name || 'Unknown Item'} - {item.quantity} x Rp {Number(item.price_at_time).toFixed(2)} = Rp {Number(item.subtotal).toFixed(2)}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="flex gap-4">
                   <button

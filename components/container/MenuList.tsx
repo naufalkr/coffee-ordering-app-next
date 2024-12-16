@@ -6,13 +6,13 @@ import Image from 'next/image';
 import { Card, CardContent, CardFooter } from '../../components/ui/card';
 
 interface MenuItem {
-  id: number;
+  item_id: number;
   name: string;
   description: string;
   price: number;
   rating: number;
   reviews: number;
-  imageUrl: string;
+  image_url: string;
   quantity: number; // Added quantity to interface
 }
 
@@ -44,7 +44,7 @@ export function MenuList() {
   const updateQuantity = (menuId: number, change: number) => {
     setMenus((currentMenus) =>
       currentMenus.map((menu) =>
-        menu.id === menuId
+        menu.item_id === menuId
           ? { ...menu, quantity: Math.max(0, menu.quantity + change) }
           : menu
       )
@@ -55,11 +55,11 @@ export function MenuList() {
     <section className="mt-10">
       <h1 className="font-semibold text-2xl">Popular Menus</h1>
       <div className="mt-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {menus.map((menu) => (
-          <Card key={menu.id} className={'p0'}>
+      {menus.map((menu) => (
+          <Card key={menu.item_id} className={'p0'}> 
             <CardContent className="p-0">
-              <Image 
-                src={menu.imageUrl} 
+              <img
+                src={menu.image_url} 
                 alt={menu.name} 
                 width={280} 
                 height={280} 
@@ -85,19 +85,19 @@ export function MenuList() {
                   Rp {menu.price.toLocaleString()}
                 </p>
                 <div className="absolute right-4 flex items-center gap-2">
-                  <button
-                    onClick={() => updateQuantity(menu.id, -1)}
+                  {/* <button
+                    onClick={() => updateQuantity(menu.item_id, -1)}
                     className="text-red-500 hover:text-red-600 text-2xl"
                   >
                     -
                   </button>
                   <span className="text-lg">{menu.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(menu.id, 1)}
+                    onClick={() => updateQuantity(menu.item_id, 1)}
                     className="text-green-500 hover:text-green-600 text-2xl"
                   >
                     +
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </CardFooter>
